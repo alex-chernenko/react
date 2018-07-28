@@ -32,7 +32,6 @@ export default ({ recipes, onEdit, onDelete, onView }) =>
                 />
                 <Rating 
                     icon='star'
-                    className="right floated"
                     defaultRating={0} 
                     maxRating={5} 
                 />

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Form, Image, Header, Button } from 'semantic-ui-react';
+import { Segment, Form, Image, Header, Button, Rating } from 'semantic-ui-react';
 import dish from '../../assets/dish.jpg';
 
 
@@ -10,7 +10,8 @@ export default class RecipeForm extends React.Component {
 
         this.state = {
             title: props.initialValues.title,
-            description: props.initialValues.description
+            description: props.initialValues.description,
+            rating: props.initialValues.rating
         }
     }
 
@@ -40,7 +41,7 @@ export default class RecipeForm extends React.Component {
 
     render() {
         const { disabled, submitButtonTitle, submitButtonIcon, cancelButtonTitle, cancelButtonIcon, title: formTitle } = this.props;
-        const { title, description } = this.state;
+        const { title, description, rating } = this.state;
 
         return (<Segment.Group raised>
                 <Header block attached="top" as="h3">
@@ -67,6 +68,13 @@ export default class RecipeForm extends React.Component {
                             disabled={disabled}
                         />
                     </Form>
+                        <Rating 
+                        icon='star'
+                        defaultRating={0} 
+                        maxRating={5} 
+                        value={rating}
+                        onChange={this.handleFieldChange}
+                        />
                 </Segment>
                 <Segment attached textAlign="right">
                     <Button icon={cancelButtonIcon} content={cancelButtonTitle} onClick={this.handleCancel} />

@@ -28,13 +28,13 @@ class RecipeEditing extends React.Component {
 
     componentDidMount() {
         if (this.state.recipeToFetch) {
-            this.props.action.fetchRecipe(this.state.recipeToFetch);
+            this.props.actions.fetchRecipe(this.state.recipeToFetch);
         }
     }
 
     componentDidUpdate() {
         if (this.props.recipe && (this.state.recipeToFetch !== this.props.recipe._id)) {
-            this.props.action.fetchRecipe(this.state.recipeToFetch);
+            this.props.actions.fetchRecipe(this.state.recipeToFetch);
         }
     }
 

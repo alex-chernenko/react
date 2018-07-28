@@ -1,7 +1,7 @@
 const recipeRepository = require('./recipe.repository');
 
 class RecipeService {
-	setRecipeRating(id, recipe) {
+	setRating(id, recipe) {
 		return recipeRepository.findOneAndUpdate({ _id: id }, {$set: {rating: recipe.rating}});
 	}
 	getAllRecipes() {

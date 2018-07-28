@@ -5,7 +5,7 @@ import { Image, Header, Button, Container } from 'semantic-ui-react';
 export default ({onCreate}) => (
     <Container>
         <Image centered rounded src={chef} size="medium"/>
-        <Header textAlign="center" as="h3">You haven't added recipes</Header>
+        <Header textAlign="center" as="h3">You haven't add recipes</Header>
         <Button 
             size="big" 
             content="Quickly add one!" 
