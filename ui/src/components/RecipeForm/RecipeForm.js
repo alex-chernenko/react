@@ -36,7 +36,11 @@ export default class RecipeForm extends React.Component {
     }
 
     isSubmitAllowed() {
-        return this.state.title && this.state.description;
+        return this.state.title && this.state.description && this.state.rating;
+    }
+
+    handleRate = (e, { rating }) => {
+        this.setState({ rating: rating });
     }
 
     render() {
@@ -70,10 +74,10 @@ export default class RecipeForm extends React.Component {
                     </Form>
                         <Rating 
                         icon='star'
-                        defaultRating={0} 
                         maxRating={5} 
+                        defaultRating={this.state.rating}
                         value={rating}
-                        onChange={this.handleFieldChange}
+                        onRate={this.handleRate}
                         />
                 </Segment>
                 <Segment attached textAlign="right">
@@ -103,6 +107,7 @@ RecipeForm.PropTypes ={
     cancelButtonIcon: PropTypes.string.isRequired,
     initialValues: PropTypes.shape({
         title: PropTypes.string,
-        descripsion: PropTypes.string
+        descripsion: PropTypes.string,
+        rating: PropTypes.number
     })
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, Button, Card, Rating } from 'semantic-ui-react';
 import dish from '../../assets/dish.jpg';
 
-export default ({ recipes, onEdit, onDelete, onView }) =>
+export default ({ recipes, onEdit, onDelete, onView, onRate }) =>
     recipes && recipes.map((recipe, index) => (
         <Card fluid key={index}>
             <Card.Content>
@@ -34,6 +34,8 @@ export default ({ recipes, onEdit, onDelete, onView }) =>
                     icon='star'
                     defaultRating={0} 
                     maxRating={5} 
+                    rating = {recipe.rating}
+                    onRate={(e, {rating}) => onRate && onRate(recipe._id, rating)}
                 />
                 <Card.Header style={{ marginTop: '1.5em' }}>
                     {recipe.title}

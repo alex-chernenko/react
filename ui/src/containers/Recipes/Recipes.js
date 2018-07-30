@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Container, Image, Grid, Segment } from 'semantic-ui-react';
-import { fetchAllRecipes, deleteRecipe } from './RecipesActions';
+import { fetchAllRecipes, deleteRecipe, setRating } from './RecipesActions';
 import { allRecipes, isRecipesFetching } from './RecipesReducer';
 import logo from '../../assets/logo.png';
 import RecipeList from '../../components/RecipeList/RecipeList';
@@ -38,6 +38,12 @@ class Recipes extends React.Component {
         this.props.history.push(`/recipes/new`);
     }
 
+    handleRating = (id, rating) => {
+        let recipe = this.props.allRecipes.find(r => r._id === id);
+        recipe.rating = rating;
+        this.props.actions.setRating(recipe);
+    }
+
     toggleRecipeModal = id => {
         this.setState({
             activeRecipe: this.props.allRecipes.find(r => r._id === id)
@@ -51,8 +57,8 @@ class Recipes extends React.Component {
         this.setState({
             search: text
         })
-        
     }
+
     searchRecipes = (search, allRecipes) => {
         var searchedRecipes = [];
             for (let i = 0; i < allRecipes.length; i++) {
@@ -63,7 +69,20 @@ class Recipes extends React.Component {
                 }
             }
             return searchedRecipes;   
-        }           
+        } 
+
+    sort(allRecipes) {
+        
+        allRecipes.sort(function(a, b) {
+                    return  b.rating - a.rating
+                }) 
+    
+            return allRecipes;
+    }
+    
+   
+
+        
     
     
     
@@ -72,6 +91,7 @@ class Recipes extends React.Component {
         const { isFetching, allRecipes } = this.props;
         const { activeRecipe, search } = this.state;
         let filteredRecipes = this.searchRecipes(search, allRecipes);
+        
         return (<Container>
             <Grid centered columns={1}>
                 <Grid.Column>
@@ -89,6 +109,7 @@ class Recipes extends React.Component {
                                     <RecipeListHeader
                                         onCreate={this.handleRecipeCreate} 
                                         onChange={this.search}
+                                        onClick={this.sort(filteredRecipes)}
                                         listLength={allRecipes.length}
                                         /> 
                                     <RecipeList 
@@ -96,6 +117,7 @@ class Recipes extends React.Component {
                                         onView={this.toggleRecipeModal} 
                                         onDelete={this.handleDelete} 
                                         onEdit={this.handleEdit} 
+                                        onRate={this.handleRating}
                                     />
                                 </React.Fragment>
                             }
@@ -123,7 +145,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps =  dispatch => ({
-    actions: bindActionCreators({fetchAllRecipes,deleteRecipe}, dispatch)
+    actions: bindActionCreators({fetchAllRecipes,deleteRecipe,setRating }, dispatch)
 });
 
 export default connect(mapStateToProps,  mapDispatchToProps)(Recipes);

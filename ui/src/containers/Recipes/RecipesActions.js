@@ -34,3 +34,10 @@ export const setActiveRecipe = id => ({
         id
     }
 });
+
+export const setRating =  recipe => ({
+    type: constants.SET_RATING,
+    payload: recipe
+    
+});
+
